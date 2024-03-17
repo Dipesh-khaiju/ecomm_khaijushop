@@ -2,13 +2,12 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {getAuth,createUserWithEmailAndPassword} from "firebase/auth";
-import dotenv from "dotenv"
-
-dotenv.config();
+import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: process.env.APIKEY,
+  // apiKey: process.env.REACT_APP_APIKEY,
+  apiKey:"AIzaSyDG7tNEMMp3iDFR9-PkTzSoVPCOJlcmJ2k",
   authDomain: "khaijushop.firebaseapp.com",
   projectId: "khaijushop",
   storageBucket: "khaijushop.appspot.com",
@@ -21,4 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
-export{app,auth}
+const db = getFirestore(app);
+
+
+export{app,auth,db}

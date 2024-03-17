@@ -10,7 +10,10 @@ import Navbar from "../src/components/Navbar/Navbar"
 import Footer from "../src/components/Footer/Footer";
 import toast,{Toaster} from "react-hot-toast";
 import { onAuthStateChanged } from 'firebase/auth';
-import {auth} from "./FireBaseAuth/FireBaseAuth"
+import {auth} from "./FireBaseAuth/FireBaseAuth";
+import SingleProduct from './pages/SingleProduct/SingleProduct';
+import About from './pages/AboutUs/About';
+import Contact from './pages/Contact/Contact';
 
 function App() {
 
@@ -44,6 +47,7 @@ function App() {
 
   const addToCart=(product)=>{
     console.log(product);
+
     // console.log(cart)
     // setCart([...cart,product]);
     // setCart((prevCart) => [...prevCart,  product]);
@@ -54,6 +58,8 @@ function App() {
         item.id===product.id ? {...item, quantity:item.quantity+1} :  item
       ))
       setCart(updateCart)
+      toast.success("Added To Cart Successfully")
+      
     }
     else{
       setCart((prevCart) => [...prevCart, { ...product,quantity:1}]); // Adding quantity to the api as it donot have quantity
@@ -79,13 +85,18 @@ function App() {
       <div>
       <BrowserRouter>
       <Navbar Carter={cart} userName={userName} />
+      
       <Routes>
       <Route path="/" element={<Home/>} />
+      <Route path="/aboutus" element={<About />} />
+      <Route path="/Contact" element={<Contact />} />
       <Route path="/cart" element={<Cart cart={cart } addCount={handleAdd} subCount={handleSub} getTotal={getTotal} removeItem={removeItem} />} />  
       <Route path="/allproducts" element={<AllProducts AddToCart={addToCart} />} /> 
+       <Route path="/singleproduct/:productid" element={<SingleProduct AddToCart={addToCart} />} /> {/* here productid can be anything buit should match in singleproduct page */}    
       <Route path="/login" element={<Login />} />  
       <Route path="/signUP" element={<Signup />} setUserName={setUserName} />  
      </Routes>
+
      <Toaster />
      <Footer/>
       </BrowserRouter>

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import jeans from "../../assets/jeans.jpg";
+import { FaSearch }from "react-icons/fa"
+import toast from "react-hot-toast";
+import {Link} from "react-router-dom"
 
 
 const AllProducts = ({AddToCart}) => {
@@ -9,6 +12,8 @@ const AllProducts = ({AddToCart}) => {
   const [selectCategory, setSelectCategory] = useState("");
   const [allProducts, setAllProducts] = useState([]);
   const [showProduct, setShowProduct] = useState(false);
+  const [searchItem,setSearchItem] =useState("");
+
 
   //    for all product  categories
   useEffect(() => {
@@ -56,7 +61,22 @@ const AllProducts = ({AddToCart}) => {
     // allProducts.filter()
     setShowProduct(true);
   };
-
+ 
+  const handleSearchByIcon =()=>{
+    
+      const searchProduct = allProducts.filter((searchFilterItem)=>(
+        searchFilterItem.title.toLowerCase().includes(searchItem)
+      ))
+      if (searchProduct.length === 0) {
+       return toast.error("Items do not match your search");
+       
+      } else {
+        setAllProducts(searchProduct);
+      }
+    
+    
+  }
+  
   return (
     <>
       <>
@@ -74,7 +94,7 @@ const AllProducts = ({AddToCart}) => {
 
         {/* Showing all the categories from api  */}
 
-        <div  className=" flex gap-3 justify-center block mb-2 text-sm font-medium text-gray-900 dark:text-Black mt-4 mb-5 flex-wrap">
+        <div  className=" flex gap-3 justify-center block mb-2 text-xl font-medium text-gray-900 dark:text-Black mt-4 mb-5 flex-wrap">
           <select onChange={(e) => filterCategory(e.target.value)}>
             <option>Filter By Category</option>
 
@@ -100,18 +120,24 @@ const AllProducts = ({AddToCart}) => {
           </select>
         </div>
 
+
+                <div className="text-center text-2xl flex items-center justify-center  mb-3 mt-3">
+                  <input onChange={((e)=>setSearchItem(e.target.value))} value={searchItem}  placeholder="search-item" className="border-4 w-2/3 md:w-auto text-black px-4 py-2 " />
+                  <FaSearch className="ml-4 cursor-pointer " size={30} onClick={handleSearchByIcon} />
+                </div>
+
         {/* products section showing  products from single categories */}
         {showProduct ? (
           <div className=" flex flex-wrap justify-center mx-4  gap-5 mt-5 mb-5">
             {products.map((product, index) => (
               <div key={index} className="  lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl bg-black">
-                <a className="block relative h-48 rounded overflow-hidden">
+                <Link className="block relative h-48 rounded overflow-hidden" to={`/singleproduct/${product.id}`}>
                   <img
                     alt="ecommerce"
                     className="object-contain object-center  block"
                     src={product.thumbnail}
                   />
-                </a>
+                </Link>
                 <div className="mt-4">
                   <h3 className="text-gray-500 text-xs text-white tracking-widest title-font mb-1">
                     Brand: {product.brand}
@@ -129,16 +155,16 @@ const AllProducts = ({AddToCart}) => {
           <div className="flex-wrap  flex gap-4 justify-center  ">
             {allProducts.map((AllItems, index) => (
               <div
-                key={index}
+                key={AllItems.id}
                 className="lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl mx-4 bg-black "
               >
-                <a className="block relative h-48 rounded overflow-hidden">
+                <Link className="block relative h-48 rounded overflow-hidden" to={`/singleproduct/${AllItems.id}`}>
                   <img
                     alt="ecommerce"
                     className="object-cover object-center w-full h-full block"
                     src={AllItems.thumbnail}
                   />
-                </a>
+                </Link>
                 <div className="mt-4">
                   <h3 className="text-gray-500 text-xs tracking-widest text-white title-font mb-1">
                     Brand: {AllItems.brand}
@@ -153,8 +179,6 @@ const AllProducts = ({AddToCart}) => {
             ))}
           </div>
         )}
-
-
 
 
         {/* showing all  the products in all products page */}
