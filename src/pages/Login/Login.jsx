@@ -1,8 +1,8 @@
-import loginimg from "../../assets/Heroimg.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../FireBaseAuth/FireBaseAuth";
 import {  signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
+import homeimg from "../../assets/Home.jpg"
 
 const Login = () => {
   const navigateLogin = useNavigate();
@@ -40,7 +40,7 @@ const Login = () => {
       <div>
         <div className="relative">
           <img
-            src={loginimg}
+            src={homeimg}
             alt=""
             className="object-cover w-full obbject-center h-[200px]"
           />
