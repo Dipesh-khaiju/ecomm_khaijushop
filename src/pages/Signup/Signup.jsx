@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import {auth} from "../../FireBaseAuth/FireBaseAuth"
 import { createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
 // import Layout from "../../components/Layout/Layout"
+import homeimg from "../../assets/Home.jpg"
 
 
 const Signup = () => {
@@ -38,6 +39,18 @@ const navigateLogin = useNavigate();
     <>
       {/* <Layout> */}
       <div>
+      <div className="relative">
+          <img
+            src={homeimg}
+            alt=""
+            className="object-cover w-full obbject-center h-[200px]"
+          />
+
+          <div className="w-full h-[200px] bg-black absolute top-0 left-0 opacity-[.4]"></div>
+          <h2 className="absolute top-[40%] left-[10%] text-white font-semibold text-3xl  md:text-5xl">
+            Login
+          </h2>
+        </div>
         <div className="container px-5 py-14 mx-auto  flex">
           <div className="  bg-rose-100 rounded-lg p-8 flex flex-col  mx-auto mt-10 md:mt-0  shadow-md">
             <h2 className="text-gray-900 text-lg md:text-3xl mb-1 font-medium title-font">SignUp</h2>

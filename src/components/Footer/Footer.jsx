@@ -34,7 +34,7 @@ const Footer = () => {
         </div>
       </div>
       <hr className="border-gray-600 my-8" />
-      <p className="text-center text-sm text-gray-400">&copy; 2024 Your Company Name. All Rights Reserved.</p>
+      <p className="text-center text-sm text-gray-400">&copy; 2024 KhaijuShop. All Rights Reserved.</p>
     </footer>
 
       </div>

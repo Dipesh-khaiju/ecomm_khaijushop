@@ -108,9 +108,15 @@ const Navbar = ({ Carter, userName }) => {
                   <GiHamburgerMenu size={25} />
                 </button>
               )}
-              <span className="text-xs md:text-sm m-auto absolute z-10 right-[25px] hidden sm:block top-[40px] text-center">
+              {/* <span className="text-xs md:text-sm m-auto absolute z-10 right-[25px] hidden sm:block top-[40px] text-center">
                 {userName}
-              </span>
+              </span> */}
+
+              <div className="rounded-full border-2 flex p-1 md:p-2">
+                 <div className=" top-5 left-8">
+                        {userName.substring(0,2)}
+                   </div>
+              </div>
             </div>
           </div>
         </header>

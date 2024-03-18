@@ -51,20 +51,16 @@ const Contact = () => {
                 width="100%"
                 height="100%"
                 className="absolute inset-0"
-                frameBorder="0"
                 title="map"
-                marginHeight="0"
-                marginWidth="0"
-                scrolling="no"
                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14133.64605638079!2d85.4377704064041!3d27.673673412322405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2snp!4v1710677558166!5m2!1sen!2snp"
               ></iframe>
-              <div className="bg-white relative flex flex-wrap py-6 rounded shadow-md">
+              <div className="bg-white relative   flex flex-wrap py-6 rounded shadow-md">
                 <div className="lg:w-1/2 px-6">
                   <h2 className="title-font font-semibold text-gray-900 tracking-widest text-xs">
                     ADDRESS
                   </h2>
                   <p className="mt-1">
-                    Libali-8
+                    Libali-8            
                     Bhaktapur,Nepal
                   </p>
                 </div> 
