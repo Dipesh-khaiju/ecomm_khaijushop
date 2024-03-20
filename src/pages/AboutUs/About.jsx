@@ -10,10 +10,10 @@ const About = () => {
           <img
             src={loginimg}
             alt=""
-            className="object-cover w-full obbject-center h-[200px]"
+            className="object-cover w-full obbject-center h-[100px]  sm:h-[200px]"
           />
 
-          <div className="w-full h-[200px] bg-black absolute top-0 left-0 opacity-[.4]"></div>
+          <div className="w-full h-[100px]  sm:h-[200px] bg-black absolute top-0 left-0 opacity-[.4]"></div>
           <h2 className="absolute top-[40%] left-[10%] text-white font-semibold text-3xl  md:text-5xl">
             About Us
           </h2>

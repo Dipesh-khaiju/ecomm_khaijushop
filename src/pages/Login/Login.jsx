@@ -2,7 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../FireBaseAuth/FireBaseAuth";
 import {  signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import homeimg from "../../assets/Home.jpg"
+import homeimg from "../../assets/Home.jpg";
+import toast from "react-hot-toast"
 
 const Login = () => {
   const navigateLogin = useNavigate();
@@ -30,8 +31,9 @@ const Login = () => {
       )
         .then( (res) => {
           navigateLogin("/");
+          window.location.reload();
         })
-        .catch((err) => toast.error(err.message));
+        .catch((err) => toast.error(err.message)); // Abdul.Muneer@dpworld.com
     }
   };
 
@@ -42,10 +44,10 @@ const Login = () => {
           <img
             src={homeimg}
             alt=""
-            className="object-cover w-full obbject-center h-[200px]"
+            className="object-cover w-full obbject-center h-[100px]  sm:h-[200px]"
           />
 
-          <div className="w-full h-[200px] bg-black absolute top-0 left-0 opacity-[.4]"></div>
+          <div className="w-full h-[100px]  sm:h-[200px] bg-black absolute top-0 left-0 opacity-[.4]"></div>
           <h2 className="absolute top-[40%] left-[10%] text-white font-semibold text-3xl  md:text-5xl">
             Login
           </h2>
