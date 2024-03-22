@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom'
-import {useState} from "react" 
+import {useState} from "react" ;
+import ModalSection from '../../components/Modal/ModalSection';
+
 
 const Cart = ({cart,addCount,subCount,removeItem,getTotal}) => {
  
   return (
+    
     <>
+   
     <div className="container mx-auto mt-10">
     <div className="flex  md:flex-row flex-col shadow-md my-10">
       <div className=" w-full md:w-3/4 bg-white px-10 py-10 gap-3">
@@ -73,12 +77,14 @@ const Cart = ({cart,addCount,subCount,removeItem,getTotal}) => {
             <span>Total cost</span>
             <span> $ {getTotal() + 10}</span>
           </div>
-          <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+          {/* <button onClick={} className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button> */}
+            <ModalSection  />
         </div>
       </div>
-
+    
     </div>
   </div>
+ 
    </>
   )
 }
