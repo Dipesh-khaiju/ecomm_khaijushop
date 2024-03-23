@@ -1,63 +1,50 @@
 import axios from "axios";
 
-const OrderDone = () => {
-  const handleEsewaPay = async () => {
+ const OrderDone=()=> {
+  const handleEsewaPayment = async () => {
     const url = "http://localhost:3000/api/createOrder";
     const data = {
       amount: 100,
-      products: [
-        {
-          product: "test",
-          amount: 100,
-          quantity: 1,
-        },
-      ],
+      products: [{ product: "test", amount: 100, quantity: 1 }],
     };
     try {
-      const response = await axios.post(url, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(url, data);
       console.log(response?.data?.formData);
-      if (response.status === 200) {
+      if (response?.status === 200) {
         esewaCall(response?.data?.formData);
       } else {
         console.error("Failed to create order");
       }
-    } catch (err) {
-      console.error("Error creating order:", err);
+    } catch (error) {
+      console.log(error);
     }
   };
-  
-
   const esewaCall = (formData) => {
-    const path = "https://epay.esewa.com.np/api/epay/main/v2/form";
+    console.log(formData);
+    const path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
     var form = document.createElement("form");
     form.setAttribute("method", "POST");
     form.setAttribute("action", path);
 
     for (const key in formData) {
-      if (Object.hasOwnProperty.call(formData, key)) {
-        var hiddenField = document.createElement("input");
-        hiddenField.setAttribute("type", "hidden");
-        hiddenField.setAttribute("name", key);
-        hiddenField.setAttribute("value", formData[key]);
-        form.appendChild(hiddenField);
-      }
+      var hiddenField = document.createElement("input");
+      hiddenField.setAttribute("type", "hidden");
+      hiddenField.setAttribute("name", key);
+      hiddenField.setAttribute("value", formData[key]);
+      form.appendChild(hiddenField);
     }
 
     document.body.appendChild(form);
     form.submit();
-  };
-
+  }; 
   return (
     <button
-      className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
-      onClick={handleEsewaPay}
-    >
-      PAY WITH ESEWA
-    </button>
+    className="bg-[#60bb46] font-semibold py-3 text-sm text-white uppercase w-full flex justify-center items-center"
+    onClick={handleEsewaPayment}
+  >
+    PAY WITH <img className="w-5 h-5 mx-1" src="https://th.bing.com/th/id/OIP.ntWij_8IZKqCcXwHeegmaQAAAA?rs=1&pid=ImgDetMain" alt="" /> SEWA
+  </button>
+  
   );
 };
 

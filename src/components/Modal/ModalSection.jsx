@@ -45,6 +45,7 @@ const ModalSection = () => {
         </Button>
         <Modal show={openModal} size="md" onClose={onCloseModal} popup>
           <Modal.Header />
+           <h1 className="mx-auto mb-6 text-xl">Please enter your details before paying.</h1>
           <Modal.Body>
             <div className="space-y-6">
               <div>

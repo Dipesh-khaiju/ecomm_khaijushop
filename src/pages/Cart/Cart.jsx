@@ -16,11 +16,11 @@ const Cart = ({cart,addCount,subCount,removeItem,getTotal}) => {
           <h1 className="font-semibold text-2xl">Shopping Cart</h1>
           <h2 className="font-semibold text-2xl">{cart.length} Items</h2>
         </div>
-        <div className="flex mt-10 mb-5">
-          <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
-          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
-          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
-          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
+        <div className="flex mt-10 space-between  mb-5">
+          <h3 className="font-semibold text-gray-600 text-xs uppercase mx-auto w-2/5">Product Details</h3>
+          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase  ml-auto w-1/5 text-center">Quantity</h3>
+          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center hidden sm:block">Price</h3>
+          <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 mx-auto text-center">Total</h3>
         </div>
 
 
@@ -38,15 +38,15 @@ const Cart = ({cart,addCount,subCount,removeItem,getTotal}) => {
               <a onClick={()=>removeItem(cartItem.id)} className="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
             </div>
           </div>
-          <div className="flex justify-center w-1/5">
-            <button onClick={()=>subCount(cartItem.id)} className="px-2 py-1 border">-</button>
+          <div className="flex justify-center mx-auto w-1/5">
+            <button onClick={()=>subCount(cartItem.id)} className="px-2 py-1  border">-</button>
           
             <input className="mx-2 border text-center w-8" type="text" value={cartItem.quantity}></input>
 
             <button onClick={()=>addCount(cartItem.id)} className="px-2 py-1 border">+</button>
           </div>
-          <span className="text-center w-1/5 font-semibold text-sm">$ {cartItem.price }</span>
-          <span  className="text-center w-1/5 font-semibold  text-sm">$ {cartItem.price *cartItem.quantity}</span>
+          <span className="text-center w-1/5 font-semibold mx-auto hidden sm:block text-sm">$ {cartItem.price }</span>
+          <span  className="text-center w-1/5 font-semibold mx-auto text-sm">$ {cartItem.price *cartItem.quantity}</span>
         </div>
         ))
         
