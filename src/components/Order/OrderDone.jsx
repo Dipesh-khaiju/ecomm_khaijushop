@@ -2,7 +2,7 @@ import axios from "axios";
 
  const OrderDone=()=> {
   const handleEsewaPayment = async () => {
-    const url = "http://localhost:3000/api/createOrder";
+    const url = "https://khaijushop-server.onrender.com/api/createOrder";
     const data = {
       amount: 100,
       products: [{ product: "test", amount: 100, quantity: 1 }],
