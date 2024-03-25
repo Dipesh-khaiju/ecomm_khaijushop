@@ -1,12 +1,25 @@
 import axios from "axios";
 
- const OrderDone=()=> {
+ const OrderDone=({cart})=> {
+    // calculate total
+    const getTotal = ()=>{
+      const anb = cart.reduce((total,cartReduceItem)=>{
+        return total + cartReduceItem.price * cartReduceItem.quantity
+      },0)
+      return anb;
+    }
+
   const handleEsewaPayment = async () => {
     const url = "https://khaijushop-server.onrender.com/api/createOrder";
     const data = {
-      amount: 100,
-      products: [{ product: "test", amount: 100, quantity: 1 }],
+      amount: getTotal()+10,
+      products: [{
+        product:"test",
+        amount: getTotal()+10,
+        quantity: 1
+      }] 
     };
+
     try {
       const response = await axios.post(url, data);
       console.log(response?.data?.formData);

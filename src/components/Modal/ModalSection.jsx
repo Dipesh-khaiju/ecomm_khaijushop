@@ -4,7 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import OrderDone from "../Order/OrderDone";
 
-const ModalSection = () => {
+const ModalSection = ({cart}) => {
   const [openModal, setOpenModal] = useState(false);
   const [orderDetails, setorderDetails] = useState({
     fullName: "",
@@ -69,7 +69,7 @@ const ModalSection = () => {
                 <TextInput
                   id="Address"
                   name="address"
-                  placeholder="Your Full Name"
+                  placeholder="Your Full Address"
                   value={orderDetails.address}
                   onChange={handleChange}
                   required
@@ -91,7 +91,7 @@ const ModalSection = () => {
               <div className="w-full">
                 {/* <Button onClick={handleSubmit}>Pay with Esewa</Button> */}
                 
-                 <OrderDone  handleSubmit={handleSubmit}/>
+                 <OrderDone cart={cart} handleSubmit={handleSubmit}/>
               </div>
             </div>
           </Modal.Body>

@@ -78,7 +78,7 @@ const Cart = ({cart,addCount,subCount,removeItem,getTotal}) => {
             <span> $ {getTotal() + 10}</span>
           </div>
           {/* <button onClick={} className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button> */}
-            <ModalSection  />
+            <ModalSection cart={cart} />
         </div>
       </div>
     
