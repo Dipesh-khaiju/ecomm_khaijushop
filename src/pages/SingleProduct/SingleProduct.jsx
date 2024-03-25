@@ -157,7 +157,7 @@ const SingleProduct = ({ AddToCart }) => {
               <div className="flex">
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {" "}
-                  ${SingleProduct.price}
+                  Rs.{SingleProduct.price}
                 </span>
                 <button
                   onClick={AddsingleProduct}

@@ -45,8 +45,8 @@ const Cart = ({cart,addCount,subCount,removeItem,getTotal}) => {
 
             <button onClick={()=>addCount(cartItem.id)} className="px-2 py-1 border">+</button>
           </div>
-          <span className="text-center w-1/5 font-semibold mx-auto hidden sm:block text-sm">$ {cartItem.price }</span>
-          <span  className="text-center w-1/5 font-semibold mx-auto text-sm">$ {cartItem.price *cartItem.quantity}</span>
+          <span className="text-center w-1/5 font-semibold mx-auto hidden sm:block text-sm">Rs. {cartItem.price }</span>
+          <span  className="text-center w-1/5 font-semibold mx-auto text-sm">Rs. {cartItem.price *cartItem.quantity}</span>
         </div>
         ))
         
@@ -63,19 +63,19 @@ const Cart = ({cart,addCount,subCount,removeItem,getTotal}) => {
         <h1 className="font-semibold text-2xl border-b pb-8">Order Summary</h1>
         <div className="flex justify-between mt-10 mb-5">
           <span className="font-semibold text-sm uppercase"> {cart.length} items</span>
-          <span className="font-semibold text-sm">${getTotal()}</span>
+          <span className="font-semibold text-sm">Rs.{getTotal()}</span>
         </div>
         <div>
           <label className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
           <select className="block p-2 text-gray-600 w-full text-sm">
-            <option>Standard shipping - $10.00</option>
+            <option>Standard shipping - Rs.10.00</option>
           </select>
         </div>
        
         <div className="border-t mt-8">
           <div className="flex font-semibold justify-between py-6 text-sm uppercase">
             <span>Total cost</span>
-            <span> $ {getTotal() + 10}</span>
+            <span> Rs. {getTotal() + 10}</span>
           </div>
           {/* <button onClick={} className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button> */}
             <ModalSection cart={cart} />

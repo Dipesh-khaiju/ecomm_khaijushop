@@ -145,7 +145,7 @@ const AllProducts = ({AddToCart}) => {
                   <h2 className="text-gray-900 text-white title-font text-lg font-medium">
                     Name: {product.title}
                   </h2>
-                  <p className="mt-1 text-white">price: ${product.price}</p>
+                  <p className="mt-1 text-white">price: Rs.{product.price}</p>
                 </div>
                 <button className="  mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white" onClick={()=>AddToCart(product)}>Add to cart</button>
               </div>
@@ -172,7 +172,7 @@ const AllProducts = ({AddToCart}) => {
                   <h2 className="text-gray-900 title-font text-white text-lg font-medium">
                     Name: {AllItems.title}
                   </h2>
-                  <p className="mt-1 text-white">price: ${AllItems.price}</p>
+                  <p className="mt-1 text-white">price: Rs.{AllItems.price}</p>
                 </div>
                 <button className="  mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white" onClick={()=>AddToCart(AllItems)}>Add to cart</button>
               </div>
