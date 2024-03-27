@@ -1,7 +1,7 @@
 import './App.css';
 import Home from './pages/Home/Home';
 import Cart from "./pages/Cart/Cart"
-import AllProducts from './components/AllProducts/AllProducts';
+// import AllProducts from './components/AllProducts/AllProducts';
 import{ BrowserRouter, Route, Routes} from "react-router-dom"
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
@@ -14,6 +14,8 @@ import {auth} from "./FireBaseAuth/FireBaseAuth";
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 import About from './pages/AboutUs/About';
 import Contact from './pages/Contact/Contact';
+import {lazy,Suspense} from "react";
+const AllProducts = lazy(() => import('./components/AllProducts/AllProducts'));
 
 
 
@@ -87,7 +89,7 @@ function App() {
       <div>
       <BrowserRouter>
       <Navbar Carter={cart} userName={userName} />
-      
+      <Suspense fallback={<div className="text-4xl w-full h-screen  items-center flex  justify-center "><h1 className=''>Loading your items...</h1></div>}>
       <Routes>
       <Route path="/" element={<Home/>} />
       <Route path="/aboutus" element={<About />} />
@@ -98,6 +100,7 @@ function App() {
       <Route path="/login" element={<Login />} />  
       <Route path="/signUP" element={<Signup />} setUserName={setUserName} />  
      </Routes>
+     </Suspense>
 
      <Toaster />
      <Footer/>
