@@ -65,7 +65,7 @@ function App() {
       toast.success("Added To Cart Successfully")
       
     }
-    else{
+    else{  
       setCart((prevCart) => [...prevCart, { ...product,quantity:1}]); // Adding quantity to the api as it donot have quantity
     }
     
