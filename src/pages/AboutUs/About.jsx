@@ -35,11 +35,11 @@ const About = () => {
               </h1>
               <p className="hidden text md:text-5xl text-[black] text-3xl mb-6 lg:inline-block">
                 {" "}
-                Khaiju<span className="text-red-500">Shop</span>{" "}
+                Hamroo<span className="text-red-500">Shop</span>{" "}
               </p>
 
               <p className="mb-8 leading-relaxed">
-                The KhaijuShop is one of the Nepals's leading digital ecommerce
+                The HamrooShop is one of the Nepals's leading digital ecommerce
                 entity that provides wide ranges of product at reasonable and
                 affordable prices.
               </p>

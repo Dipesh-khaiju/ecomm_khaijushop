@@ -7,7 +7,7 @@ const Footer = () => {
       <footer className="bg-black   text-gray-300">
       <div className="container mx-auto py-4 px-4 flex flex-wrap justify-between">
         <div className="mb-2 ">
-          <h2 className="text-4xl  font-semibold">  Khaiju<span className="text-[red]">Shop</span></h2>
+          <h2 className="text-4xl  font-semibold"> Hamroo<span className="text-[red]">Shop</span></h2>
         </div>
         <div className="flex flex-wrap items-start">
           <div className="mr-8 mb-4">
@@ -34,7 +34,7 @@ const Footer = () => {
         </div>
       </div>
       <hr className="border-gray-600 my-8" />
-      <p className="text-center text-sm text-gray-400">&copy; 2024 KhaijuShop. All Rights Reserved.</p>
+      <p className="text-center text-sm text-gray-400">&copy; 2024 HamrooShop. All Rights Reserved.</p>
     </footer>
 
       </div>

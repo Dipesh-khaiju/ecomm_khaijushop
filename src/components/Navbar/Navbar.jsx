@@ -31,7 +31,7 @@ signOut(auth).then(() => {
             <div>
               <Link to="/">
                 <h3 className="font-bold md:text-3xl  lg:4xl  text-xl">
-                  Khaiju<span className="text-[red]">Shop</span>
+                  Hamroo<span className="text-[red]">Shop</span>
                 </h3>
               </Link>
             </div>
