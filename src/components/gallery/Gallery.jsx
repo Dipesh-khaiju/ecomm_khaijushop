@@ -1,9 +1,9 @@
-import g1 from "../../assets/galleryimg/img1.jpg";
-import g2 from "../../assets/galleryimg/img2.jpg";
-import g3 from "../../assets/galleryimg/img3.jpg";
-import g4 from "../../assets/galleryimg/img4.jpg";
-import g5 from "../../assets/galleryimg/img5.jpg";
-import g6 from "../../assets/galleryimg/img6.jpg";
+import g1 from "../../assets/galleryimg/creams.jpg";
+import g2 from "../../assets/galleryimg/brushed.jpg";
+import g3 from "../../assets/galleryimg/creamhand.jpg";
+import g4 from "../../assets/galleryimg/perfume.jpg";
+import g5 from "../../assets/galleryimg/sticks.jpg";
+import g6 from "../../assets/galleryimg/store.jpg";
 
 const Gallery = () => {
   return (

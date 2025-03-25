@@ -10,6 +10,7 @@ const AllProducts = ({ AddToCart }) => {
   const [products, setProducts] = useState([]);
   const [selectCategory, setSelectCategory] = useState("");
   const [allProducts, setAllProducts] = useState([]);
+  const [originalProducts, setOriginalProducts] = useState([]); // Store original products
   const [showProduct, setShowProduct] = useState(false);
   const [searchItem, setSearchItem] = useState("");
 
@@ -18,7 +19,17 @@ const AllProducts = ({ AddToCart }) => {
     const getAllProducts = async () => {
       try {
         const result = await axios("https://dummyjson.com/products/categories");
-        setAllCategory(result.data);
+        const cosmeticsCategories = result.data.filter((category) =>
+          [
+            "fragrances",
+            "skincare",
+            "mens-watches",
+            "womens-watches",
+            "womens-jewellery",
+            "sunglasses",
+          ].includes(category)
+        );
+        setAllCategory(cosmeticsCategories);
       } catch (err) {
         console.log(err);
       }
@@ -31,11 +42,22 @@ const AllProducts = ({ AddToCart }) => {
     const getAllProductsCategories = async () => {
       try {
         if (selectCategory) {
-          const result = await axios(
+          const res = await axios(
             `https://dummyjson.com/products/category/${selectCategory}`
           );
-          // console.log(result.data.products);
-          setProducts(result.data.products);
+
+          const cosmeticsProducts = res.data.products.filter((product) =>
+            [
+              "fragrances",
+              "skincare",
+              "mens-watches",
+              "womens-watches",
+              "womens-jewellery",
+              "sunglasses",
+            ].includes(product.category)
+          );
+
+          setProducts(cosmeticsProducts);
         }
       } catch (err) {
         console.log(err);
@@ -47,30 +69,70 @@ const AllProducts = ({ AddToCart }) => {
   //   for showing allproducts on allproducts page
   useEffect(() => {
     const allproductsonhome = async () => {
-      const res = await axios("https://dummyjson.com/products");
-      setAllProducts(res.data.products);
-      //   console.log(allProducts);
+      try {
+        const res = await axios("https://dummyjson.com/products");
+        // Filter only cosmetics-related products
+        const cosmeticsProducts = res.data.products.filter((product) =>
+          [
+            "fragrances",
+            "skincare",
+            "mens-watches",
+            "womens-watches",
+            "womens-jewellery",
+            "sunglasses",
+          ].includes(product.category)
+        );
+        setAllProducts(cosmeticsProducts);
+        setOriginalProducts(cosmeticsProducts); // Save a copy of original products
+      } catch (err) {
+        console.log(err);
+      }
     };
     allproductsonhome();
   }, []);
 
   const filterCategory = (category) => {
     setSelectCategory(category);
-    // allProducts.filter()
-    setShowProduct(true);
+    if (category === "") {
+      // If no category selected, show all products and reset search
+      setShowProduct(false);
+      setAllProducts(originalProducts);
+      setSearchItem("");
+    } else {
+      setShowProduct(true);
+    }
   };
 
   const handleSearchByIcon = () => {
-    const searchProduct = allProducts.filter((searchFilterItem) =>
-      searchFilterItem.title.toLowerCase().includes(searchItem)
+    if (!searchItem.trim()) {
+      // If search box is empty, show all products
+      setAllProducts(originalProducts);
+      return;
+    }
+    
+    const searchTerm = searchItem.toLowerCase();
+    const searchProduct = originalProducts.filter((searchFilterItem) =>
+      searchFilterItem.title.toLowerCase().includes(searchTerm)
     );
+    
     if (searchProduct.length === 0) {
-      return toast.error("Items do not match your search");
+      toast.error("Items do not match your search");
+      // Keep current products visible
     } else {
       setAllProducts(searchProduct);
+      setShowProduct(false); // Show filtered products in all products view
+      setSelectCategory(""); // Reset category filter
     }
   };
-  console.log("All category", allCategory);
+
+  // Add this function to handle search input changes
+  const handleSearchInputChange = (e) => {
+    setSearchItem(e.target.value);
+    if (e.target.value === "") {
+      // Reset products when search box is cleared
+      setAllProducts(originalProducts);
+    }
+  };
 
   return (
     <>
@@ -86,61 +148,29 @@ const AllProducts = ({ AddToCart }) => {
             All Products
           </h2>
         </div>
-
         {/* Showing all the categories from api  */}
 
-        <div className=" flex gap-3 justify-center block mb-2 text-xl font-medium text-gray-900 dark:text-Black mt-4 mb-5 flex-wrap">
-          <select onChange={(e) => filterCategory(e.target.value)}>
-            <option>Filter By Category</option>
-
-            {allCategory
-              .filter(
-                (filterItem) =>
-                  ![
-                    // "lighting",
-                    // "motorcycle",
-                    // "automotive",
-                    "furniture",
-                    // "smartphones",
-                    // "laptops",
-                    // "groceries",
-                    "home-decoration",
-                  ].includes(filterItem)
-              )
-              .map((category, index) => (
-                <option
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  key={index}
-                  value={category.name}
-                >
-                  {category.name}
-                
-                </option>
-              ))}
-          </select>
-        </div>
-
-        <div className="text-center text-2xl flex items-center justify-center  mb-3 mt-3">
+     
+        <div className="text-center text-2xl flex items-center justify-center mb-3 mt-3">
           <input
-            onChange={(e) => setSearchItem(e.target.value)}
+            onChange={handleSearchInputChange}
             value={searchItem}
             placeholder="search-item"
-            className="border-4 w-2/3 md:w-auto text-black px-4 py-2 "
+            className="border-4 w-2/3 md:w-auto text-black px-4 py-2"
           />
           <FaSearch
-            className="ml-4 cursor-pointer "
+            className="ml-4 cursor-pointer"
             size={30}
             onClick={handleSearchByIcon}
           />
         </div>
-
-        {/* products section showing  products from single categories */}
+        {/* products section showing products from single categories */}
         {showProduct ? (
-          <div className=" flex flex-wrap justify-center mx-4  gap-5 mt-5 mb-5">
+          <div className="flex flex-wrap justify-center mx-4 gap-5 mt-5 mb-5">
             {products.map((product, index) => (
               <div
                 key={index}
-                className="  lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl bg-black"
+                className="lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl bg-black"
               >
                 <Link
                   className="block relative h-48 rounded overflow-hidden"
@@ -148,7 +178,7 @@ const AllProducts = ({ AddToCart }) => {
                 >
                   <img
                     alt="ecommerce"
-                    className="object-contain object-center  block"
+                    className="object-contain object-center block"
                     src={product.thumbnail}
                   />
                 </Link>
@@ -162,7 +192,7 @@ const AllProducts = ({ AddToCart }) => {
                   <p className="mt-1 text-white">price: Rs.{product.price}</p>
                 </div>
                 <button
-                  className="  mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white"
+                  className="mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white"
                   onClick={() => AddToCart(product)}
                 >
                   Add to cart
@@ -171,11 +201,11 @@ const AllProducts = ({ AddToCart }) => {
             ))}
           </div>
         ) : (
-          <div className="flex-wrap  flex gap-4 justify-center  ">
-            {allProducts.map((AllItems, index) => (
+          <div className="flex-wrap flex gap-4 justify-center">
+            {allProducts.map((AllItems) => (
               <div
                 key={AllItems.id}
-                className="lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl mx-4 bg-black "
+                className="lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl mx-4 bg-black"
               >
                 <Link
                   className="block relative h-48 rounded overflow-hidden"
@@ -188,16 +218,16 @@ const AllProducts = ({ AddToCart }) => {
                   />
                 </Link>
                 <div className="mt-4">
-                  <h3 className=" text-xs tracking-widest text-white title-font mb-1">
+                  <h3 className="text-xs tracking-widest text-white title-font mb-1">
                     Brand: {AllItems.brand}
                   </h3>
-                  <h2 className=" title-font text-white text-lg font-medium">
+                  <h2 className="title-font text-white text-lg font-medium">
                     Name: {AllItems.title}
                   </h2>
                   <p className="mt-1 text-white">price: Rs.{AllItems.price}</p>
                 </div>
                 <button
-                  className="  mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white"
+                  className="mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white"
                   onClick={() => AddToCart(AllItems)}
                 >
                   Add to cart
@@ -206,8 +236,6 @@ const AllProducts = ({ AddToCart }) => {
             ))}
           </div>
         )}
-
-        {/* showing all  the products in all products page */}
       </>
     </>
   );

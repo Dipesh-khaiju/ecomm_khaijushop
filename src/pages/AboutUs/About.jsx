@@ -1,5 +1,6 @@
 import React from "react";
 import loginimg from "../../assets/Home.jpg";
+import AboutImg from "../../assets/About.jpg";
 
 
 const About = () => {
@@ -71,7 +72,7 @@ const About = () => {
               <img
                 className="object-cover object-center rounded"
                 alt="hero"
-                src="https://th.bing.com/th/id/R.4b2bd2e9f7b949a66f583cc19ebbd0f7?rik=X9AHdyMtaN86KQ&riu=http%3a%2f%2fwww.sunriseglobalschool.com%2fimages%2four-mission.gif&ehk=5avAOCUGVM91vPg4dOGLk48YWfybYslSEMV4TmelTYs%3d&risl=&pid=ImgRaw&r=0"
+                src={AboutImg}
               />
             </div>
           </div>
