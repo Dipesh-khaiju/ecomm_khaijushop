@@ -6,84 +6,17 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const AllProducts = ({ AddToCart }) => {
-  const [allCategory, setAllCategory] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [selectCategory, setSelectCategory] = useState("");
   const [allProducts, setAllProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]); // Store original products
-  const [showProduct, setShowProduct] = useState(false);
   const [searchItem, setSearchItem] = useState("");
-
-  //    for all product  categories
-  useEffect(() => {
-    const getAllProducts = async () => {
-      try {
-        const result = await axios("https://dummyjson.com/products/categories");
-        const cosmeticsCategories = result.data.filter((category) =>
-          [
-            "fragrances",
-            "skincare",
-            "mens-watches",
-            "womens-watches",
-            "womens-jewellery",
-            "sunglasses",
-          ].includes(category)
-        );
-        setAllCategory(cosmeticsCategories);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getAllProducts();
-  }, []);
-
-  //for selecting a category and showing data on page
-  useEffect(() => {
-    const getAllProductsCategories = async () => {
-      try {
-        if (selectCategory) {
-          const res = await axios(
-            `https://dummyjson.com/products/category/${selectCategory}`
-          );
-
-          const cosmeticsProducts = res.data.products.filter((product) =>
-            [
-              "fragrances",
-              "skincare",
-              "mens-watches",
-              "womens-watches",
-              "womens-jewellery",
-              "sunglasses",
-            ].includes(product.category)
-          );
-
-          setProducts(cosmeticsProducts);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getAllProductsCategories();
-  }, [selectCategory]);
 
   //   for showing allproducts on allproducts page
   useEffect(() => {
     const allproductsonhome = async () => {
       try {
-        const res = await axios("https://dummyjson.com/products");
-        // Filter only cosmetics-related products
-        const cosmeticsProducts = res.data.products.filter((product) =>
-          [
-            "fragrances",
-            "skincare",
-            "mens-watches",
-            "womens-watches",
-            "womens-jewellery",
-            "sunglasses",
-          ].includes(product.category)
-        );
-        setAllProducts(cosmeticsProducts);
-        setOriginalProducts(cosmeticsProducts); // Save a copy of original products
+        const res = await axios("http://localhost:3000/api/products");
+        setAllProducts(res.data.products);
+        setOriginalProducts(res.data.products); // Save a copy of original products
       } catch (err) {
         console.log(err);
       }
@@ -91,37 +24,23 @@ const AllProducts = ({ AddToCart }) => {
     allproductsonhome();
   }, []);
 
-  const filterCategory = (category) => {
-    setSelectCategory(category);
-    if (category === "") {
-      // If no category selected, show all products and reset search
-      setShowProduct(false);
-      setAllProducts(originalProducts);
-      setSearchItem("");
-    } else {
-      setShowProduct(true);
-    }
-  };
-
   const handleSearchByIcon = () => {
     if (!searchItem.trim()) {
       // If search box is empty, show all products
       setAllProducts(originalProducts);
       return;
     }
-    
+
     const searchTerm = searchItem.toLowerCase();
     const searchProduct = originalProducts.filter((searchFilterItem) =>
       searchFilterItem.title.toLowerCase().includes(searchTerm)
     );
-    
+
     if (searchProduct.length === 0) {
       toast.error("Items do not match your search");
       // Keep current products visible
     } else {
       setAllProducts(searchProduct);
-      setShowProduct(false); // Show filtered products in all products view
-      setSelectCategory(""); // Reset category filter
     }
   };
 
@@ -148,9 +67,7 @@ const AllProducts = ({ AddToCart }) => {
             All Products
           </h2>
         </div>
-        {/* Showing all the categories from api  */}
 
-     
         <div className="text-center text-2xl flex items-center justify-center mb-3 mt-3">
           <input
             onChange={handleSearchInputChange}
@@ -164,78 +81,41 @@ const AllProducts = ({ AddToCart }) => {
             onClick={handleSearchByIcon}
           />
         </div>
-        {/* products section showing products from single categories */}
-        {showProduct ? (
-          <div className="flex flex-wrap justify-center mx-4 gap-5 mt-5 mb-5">
-            {products.map((product, index) => (
-              <div
-                key={index}
-                className="lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl bg-black"
+
+        <div className="flex-wrap flex gap-4 justify-center">
+          {allProducts.map((AllItems) => (
+            <div
+              key={AllItems.id}
+              className="lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl mx-4 bg-black"
+            >
+              <Link
+                className="block relative h-48 rounded overflow-hidden"
+                to={`/singleproduct/${AllItems.id}`}
               >
-                <Link
-                  className="block relative h-48 rounded overflow-hidden"
-                  to={`/singleproduct/${product.id}`}
-                >
-                  <img
-                    alt="ecommerce"
-                    className="object-contain object-center block"
-                    src={product.thumbnail}
-                  />
-                </Link>
-                <div className="mt-4">
-                  <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">
-                    Brand: {product.brand}
-                  </h3>
-                  <h2 className="text-gray-900 title-font text-lg font-medium">
-                    Name: {product.title}
-                  </h2>
-                  <p className="mt-1 text-white">price: Rs.{product.price}</p>
-                </div>
-                <button
-                  className="mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white"
-                  onClick={() => AddToCart(product)}
-                >
-                  Add to cart
-                </button>
+                <img
+                  alt="ecommerce"
+                  className="object-cover object-center w-full h-full block"
+                  src={AllItems.thumbnail}
+                />
+              </Link>
+              <div className="mt-4">
+                <h3 className="text-xs tracking-widest text-white title-font mb-1">
+                  Brand: {AllItems.brand}
+                </h3>
+                <h2 className="title-font text-white text-lg font-medium">
+                  Name: {AllItems.title}
+                </h2>
+                <p className="mt-1 text-white">price: Rs.{AllItems.price}</p>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex-wrap flex gap-4 justify-center">
-            {allProducts.map((AllItems) => (
-              <div
-                key={AllItems.id}
-                className="lg:w-1/4 md:w-1/2 p-4 w-full border rounded-xl mx-4 bg-black"
+              <button
+                className="mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white"
+                onClick={() => AddToCart(AllItems)}
               >
-                <Link
-                  className="block relative h-48 rounded overflow-hidden"
-                  to={`/singleproduct/${AllItems.id}`}
-                >
-                  <img
-                    alt="ecommerce"
-                    className="object-cover object-center w-full h-full block"
-                    src={AllItems.thumbnail}
-                  />
-                </Link>
-                <div className="mt-4">
-                  <h3 className="text-xs tracking-widest text-white title-font mb-1">
-                    Brand: {AllItems.brand}
-                  </h3>
-                  <h2 className="title-font text-white text-lg font-medium">
-                    Name: {AllItems.title}
-                  </h2>
-                  <p className="mt-1 text-white">price: Rs.{AllItems.price}</p>
-                </div>
-                <button
-                  className="mt-6 bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:ringblue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 text-white"
-                  onClick={() => AddToCart(AllItems)}
-                >
-                  Add to cart
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+                Add to cart
+              </button>
+            </div>
+          ))}
+        </div>
       </>
     </>
   );
