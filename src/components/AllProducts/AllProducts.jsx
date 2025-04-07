@@ -14,7 +14,7 @@ const AllProducts = ({ AddToCart }) => {
   useEffect(() => {
     const allproductsonhome = async () => {
       try {
-        const res = await axios("http://localhost:3000/api/products");
+        const res = await axios("https://khaijushop-server.onrender.com/api/products");
         setAllProducts(res.data.products);
         setOriginalProducts(res.data.products); // Save a copy of original products
       } catch (err) {
