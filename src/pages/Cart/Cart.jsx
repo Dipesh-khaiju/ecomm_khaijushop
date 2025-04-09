@@ -41,7 +41,7 @@ const Cart = ({cart,addCount,subCount,removeItem,getTotal}) => {
           <div className="flex justify-center mx-auto w-1/5">
             <button onClick={()=>subCount(cartItem.id)} className="px-2 py-1  border">-</button>
           
-            <input className="mx-2 border text-center w-8" type="text" value={cartItem.quantity}></input>
+            <input className="mx-2  px-2 border text-center w-8" type="text" value={cartItem.quantity}></input>
 
             <button onClick={()=>addCount(cartItem.id)} className="px-2 py-1 border">+</button>
           </div>

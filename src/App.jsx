@@ -15,6 +15,7 @@ import SingleProduct from './pages/SingleProduct/SingleProduct';
 import About from './pages/AboutUs/About';
 import Contact from './pages/Contact/Contact';
 import {lazy,Suspense} from "react";
+import { ProductProvider } from './context/ProductContext';
 const AllProducts = lazy(() => import('./components/AllProducts/AllProducts'));
 
 
@@ -88,6 +89,7 @@ function App() {
       <>
       <div>
       <BrowserRouter>
+      <ProductProvider>
       <Navbar Carter={cart} userName={userName} />
       <Suspense fallback={<div className="text-4xl w-full h-screen  items-center flex  justify-center "><h1 className=''>Loading your items...</h1></div>}>
       <Routes>
@@ -101,7 +103,7 @@ function App() {
       <Route path="/signUP" element={<Signup />} setUserName={setUserName} />  
      </Routes>
      </Suspense>
-
+     </ProductProvider>
      <Toaster />
      <Footer/>
       </BrowserRouter>
